@@ -14,10 +14,10 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-#### for local ####
-from dotenv import load_dotenv
-dotenv_path = './settings/.env'
-load_dotenv(dotenv_path)
+# #### for local ####
+# from dotenv import load_dotenv
+# dotenv_path = './settings/.env'
+# load_dotenv(dotenv_path)
 
 
 def login(browser, LOGIN_URL, USER_ID, PASS):
@@ -207,7 +207,7 @@ def main():
 
     options = Options()
     options.add_argument('--headless')
-    options.binary_location = '/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta'
+    # options.binary_location = '/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta'
     options.add_experimental_option("prefs", {"download.default_directory": download_dir_path})
     browser = Chrome(options=options)
 
