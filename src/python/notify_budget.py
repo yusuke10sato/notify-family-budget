@@ -14,7 +14,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
-# #### for local ####
+# #### for development ####
 # from dotenv import load_dotenv
 # dotenv_path = './settings/.env'
 # load_dotenv(dotenv_path)
@@ -203,7 +203,7 @@ def main():
         CARD_NUM1 = os.environ.get("CARD_NUM1")
         CARD_NUM2 = os.environ.get("CARD_NUM2")
 
-        LINE_TOKEN_TEST = os.environ.get("LINE_TOKEN_TEST")
+        LINE_TOKEN_TEST = os.environ.get("LINE_TOKEN_TEST")  # for development
         LINE_TOKEN_PROD = os.environ.get("LINE_TOKEN_PROD")
         BUDGET = os.environ.get("BUDGET")
 
@@ -215,14 +215,14 @@ def main():
         options.add_argument('--disable-gpu')
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument('--remote-debugging-port=9222')
-        # options.binary_location = '/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta'
+        # options.binary_location = '/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta'  # for development
         options.add_experimental_option("prefs", {"download.default_directory": download_dir_path})
         browser = Chrome(options=options)
 
 
         get_meisai_csv(browser, LOGIN_URL, USER_ID, PASS, CARD_NUM1, CARD_NUM2, download_dir_path)
         financial_report = aggregate_payment(download_dir_path, BUDGET)
-        postLineNotify(LINE_TOKEN_TEST, financial_report)
+        postLineNotify(LINE_TOKEN_TEST, financial_report)  # for development
         # postLineNotify(LINE_TOKEN_PROD, financial_report)
 
         shutil.rmtree(download_dir_path)
