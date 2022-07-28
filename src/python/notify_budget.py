@@ -207,6 +207,9 @@ def main():
 
     options = Options()
     options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--remote-debugging-port=9222')
     # options.binary_location = '/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta'
     options.add_experimental_option("prefs", {"download.default_directory": download_dir_path})
     browser = Chrome(options=options)
