@@ -1,3 +1,4 @@
+import datetime
 import glob
 import os
 import shutil
@@ -12,7 +13,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
-
 
 # #### for local ####
 # from dotenv import load_dotenv
@@ -192,35 +192,43 @@ def postLineNotify(token, message=""):
 
 
 def main():
-    USER_ID = os.environ.get("USER_ID")
-    PASS = os.environ.get("PASS")
-    LOGIN_URL = os.environ.get("LOGIN_URL")
-    CARD_NUM1 = os.environ.get("CARD_NUM1")
-    CARD_NUM2 = os.environ.get("CARD_NUM2")
 
-    LINE_TOKEN_TEST = os.environ.get("LINE_TOKEN_TEST")
-    LINE_TOKEN_PROD = os.environ.get("LINE_TOKEN_PROD")
-    BUDGET = os.environ.get("BUDGET")
+    today = datetime.datetime.today().day
 
-    # 明細ダウンロード先の一時フォルダ
-    download_dir_path = './tmp'
+    if today % 7 == 0 or today == 1:
 
-    options = Options()
-    options.add_argument('--headless')
-    options.add_argument('--disable-gpu')
-    options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--remote-debugging-port=9222')
-    # options.binary_location = '/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta'
-    options.add_experimental_option("prefs", {"download.default_directory": download_dir_path})
-    browser = Chrome(options=options)
+        USER_ID = os.environ.get("USER_ID")
+        PASS = os.environ.get("PASS")
+        LOGIN_URL = os.environ.get("LOGIN_URL")
+        CARD_NUM1 = os.environ.get("CARD_NUM1")
+        CARD_NUM2 = os.environ.get("CARD_NUM2")
+
+        LINE_TOKEN_TEST = os.environ.get("LINE_TOKEN_TEST")
+        LINE_TOKEN_PROD = os.environ.get("LINE_TOKEN_PROD")
+        BUDGET = os.environ.get("BUDGET")
+
+        # 明細ダウンロード先の一時フォルダ
+        download_dir_path = './tmp'
+
+        options = Options()
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--remote-debugging-port=9222')
+        # options.binary_location = '/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta'
+        options.add_experimental_option("prefs", {"download.default_directory": download_dir_path})
+        browser = Chrome(options=options)
 
 
-    get_meisai_csv(browser, LOGIN_URL, USER_ID, PASS, CARD_NUM1, CARD_NUM2, download_dir_path)
-    financial_report = aggregate_payment(download_dir_path, BUDGET)
-    postLineNotify(LINE_TOKEN_TEST, financial_report)
-    # postLineNotify(LINE_TOKEN_PROD, financial_report)
+        get_meisai_csv(browser, LOGIN_URL, USER_ID, PASS, CARD_NUM1, CARD_NUM2, download_dir_path)
+        financial_report = aggregate_payment(download_dir_path, BUDGET)
+        postLineNotify(LINE_TOKEN_TEST, financial_report)
+        # postLineNotify(LINE_TOKEN_PROD, financial_report)
 
-    shutil.rmtree(download_dir_path)
+        shutil.rmtree(download_dir_path)
+    
+    else:
+        pass
 
 
 
