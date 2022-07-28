@@ -203,7 +203,7 @@ def main():
     BUDGET = os.environ.get("BUDGET")
 
     # 明細ダウンロード先の一時フォルダ
-    download_dir_path = '../output'
+    download_dir_path = './tmp'
 
     options = Options()
     options.add_argument('--headless')
