@@ -137,12 +137,18 @@ def aggregate_payment(download_dir_path, BUDGET):
     for file_name in file_list:
 
         df_ = pd.read_csv(file_name)
-        payment_month = int(df_.columns[-3].split('月')[0])
-        df_ = df_.iloc[:, [0, 1, -3]].copy()
-        df_.columns = ['use_date', 'shop_name', 'payment_amount']
-        df_['payment_month'] = payment_month
+        col_list = df_.columns.to_list()
+        if '支払月' in col_list:
+            df_['payment_month'] = df_.apply(lambda x : int(x['支払月'].split('月')[0]), axis=1)
+            
+        else:
+            col_month = [c for c in col_list if '月支払金額' in c][0]
+            df_['payment_month'] = int(col_month.split('月')[0])
 
+        df_ = df_[['利用日', '利用店名・商品名', '支払総額', 'payment_month']].copy()
+        df_.columns = ['use_date', 'shop_name', 'payment_amount', 'payment_month']
         df = pd.concat([df, df_], axis=0)
+
     df_amount = df.groupby(['payment_month'])['payment_amount'].sum().reset_index()
     df_date = df.groupby(['payment_month']).agg({'use_date':{min, max}}).reset_index()
     df_date.columns = [col1 + '_' + col2 if col2 != '' else col1 for col1, col2 in df_date.columns]
