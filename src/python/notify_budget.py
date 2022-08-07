@@ -222,8 +222,8 @@ def main():
 
         get_meisai_csv(browser, LOGIN_URL, USER_ID, PASS, CARD_NUM1, CARD_NUM2, download_dir_path)
         financial_report = aggregate_payment(download_dir_path, BUDGET)
-        # postLineNotify(LINE_TOKEN_TEST, financial_report)  # for development
-        postLineNotify(LINE_TOKEN_PROD, financial_report)
+        postLineNotify(LINE_TOKEN_TEST, financial_report)  # for development
+        # postLineNotify(LINE_TOKEN_PROD, financial_report)
 
         shutil.rmtree(download_dir_path)
     
