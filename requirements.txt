@@ -1,5 +1,6 @@
 selenium==4.0.0
-chromedriver-binary==103.0.5060.53
+# chromedriver-binary==103.0.5060.53
+chromedriver-binary==105.0.5195.19
 # chromedriver-binary==104.0.5112.20  # for development
 python-dotenv==0.14.0
 pandas==1.1.4
