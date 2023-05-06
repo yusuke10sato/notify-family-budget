@@ -246,6 +246,8 @@ def main():
     options.add_experimental_option("prefs", {"download.default_directory": download_dir_path})
     browser = Chrome(options=options)
 
+    start_message = "Start calculate family budget"
+    postLineNotify(LINE_TOKEN_TEST, start_message)
 
     get_meisai_csv(browser, LOGIN_URL, USER_ID, PASS, CARD_NUM, download_dir_path)
     financial_report = aggregate_payment(download_dir_path, BUDGET)
